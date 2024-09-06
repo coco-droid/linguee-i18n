@@ -1,0 +1,27 @@
+{
+  "name": "linguee",
+  "version": "1.0.0",
+  "main": "index.js",
+  "bin": "./bin/linguee.js",
+  "scripts": {
+    "init": "node ./bin/linguee.js",
+    "translate": "node dist/index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@babel/parser": "^7.25.6",
+    "@babel/traverse": "^7.25.6",
+    "@google/generative-ai": "^0.17.1",
+    "@types/node": "^22.5.4",
+    "axios": "^1.7.7",
+    "fs-extra": "^11.2.0",
+    "inquirer": "^10.2.0",
+    "prompts": "^2.4.2",
+    "typescript": "^5.5.4"
+  },
+  "devDependencies": {
+    "@types/babel__traverse": "^7.20.6"
+  }
+}
