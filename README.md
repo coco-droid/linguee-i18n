@@ -1,6 +1,6 @@
 # Linguee - Auto Translation with Google Gemini AI
 
-![Linguee Logo](./logo.png) <!-- Replace with actual logo URL -->
+![Linguee Logo](https://github.com/coco-droid/linguee/blob/c19772c277acae893bf1821621802817f5529f89/logo.png) <!-- Replace with actual logo URL -->
 
 ![npm version](https://img.shields.io/npm/v/linguee) ![License](https://img.shields.io/npm/l/linguee) ![Contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg) ![Platform](https://img.shields.io/badge/platform-react%20|%20next.js-blue)
 

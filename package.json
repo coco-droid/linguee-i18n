@@ -1,15 +1,15 @@
 {
-  "name": "linguee",
+  "name": "linguee-internationalization",
   "version": "1.0.0",
+  "description":"website internationalization  with AI.",
   "main": "index.js",
   "bin": "./bin/linguee.js",
   "scripts": {
     "init": "node ./bin/linguee.js",
     "translate": "node dist/index.js"
   },
-  "author": "",
+  "author": "coco-droid",
   "license": "ISC",
-  "description": "",
   "dependencies": {
     "@babel/parser": "^7.25.6",
     "@babel/traverse": "^7.25.6",
