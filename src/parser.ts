@@ -1,34 +1,59 @@
+"use strict";
 import fs from 'fs';
 import { parse } from '@babel/parser';
 import traverse from '@babel/traverse';
-import { StringLiteral } from '@babel/types';
 
-export function parseFiles(files: string[]): Record<string, string[]> {
-  const translations: Record<string, string[]> = {};
+interface Translation {
+    attribute?: string;
+    content?: string;
+}
 
-  files.forEach((file) => {
-    const code = fs.readFileSync(file, 'utf-8');
-    const ast = parse(code, {
-      sourceType: 'module',
-      plugins: ['jsx', 'typescript']
+export function parseFiles(files: string[]): Record<string, Translation[]> {
+    const translations: Record<string, Translation[]> = {};
+    files.forEach((file) => {
+        const code = fs.readFileSync(file, 'utf-8');
+        const ast = parse(code, {
+            sourceType: 'module',
+            plugins: ['jsx', 'typescript']
+        });
+        const fileTranslations: Translation[] = [];
+        
+        traverse(ast, {
+            JSXOpeningElement(path) {
+                // Vérifier si l'attribut 'linguee-tr' est présent
+                const lingueeAttr = path.node.attributes.find(attr => attr.name && attr.name.name === 'linguee-tr');
+                
+                if (lingueeAttr) {
+                    let translationObj: Translation = {};
+                    
+                    // Récupérer la valeur de l'attribut linguee-tr
+                    const valueNode = lingueeAttr.value;
+                    if (valueNode && valueNode.type === 'StringLiteral') {
+                        translationObj['attribute'] = valueNode.value;
+                    }
+                    
+                    // Récupérer le texte à l'intérieur de la balise (les enfants)
+                    if (path.parent && path.parent.children) {
+                        const childText = path.parent.children
+                            .filter(child => child.type === 'JSXText')
+                            .map(child => child.value.trim())
+                            .join(' '); // Concatenation des enfants s'il y en a plusieurs
+                        
+                        if (childText) {
+                            translationObj['content'] = childText;
+                        }
+                    }
+                    
+                    // Ajouter l'association dans la liste des traductions
+                    if (translationObj.attribute || translationObj.content) {
+                        fileTranslations.push(translationObj);
+                    }
+                }
+            }
+        });
+
+        translations[file] = fileTranslations;
     });
-
-    const fileTranslations: string[] = [];
-
-    traverse(ast, {
-      JSXAttribute(path) {
-        if (path.node.name.name === 'linguee-tr') {
-          const valueNode = path.node.value;
-          if (valueNode && valueNode.type === 'StringLiteral') {
-            const value = (valueNode as StringLiteral).value;
-            fileTranslations.push(value);
-          }
-        }
-      }
-    });
-
-    translations[file] = fileTranslations;
-  });
-
-  return translations;
+    
+    return translations;
 }
