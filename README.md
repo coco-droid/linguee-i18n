@@ -18,7 +18,7 @@ Linguee is an intelligent translation package powered by **Google Gemini AI**, d
 To get started, install Linguee via npm:
 
 ```bash
-npm install linguee
+npm i linguee-internationalization
 ```
 
 ## Quick Start
