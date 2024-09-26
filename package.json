@@ -1,6 +1,6 @@
 {
   "name": "linguee-internationalization",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "website internationalization  with AI.",
   "main": "index.js",
   "bin": "./bin/linguee.js",
